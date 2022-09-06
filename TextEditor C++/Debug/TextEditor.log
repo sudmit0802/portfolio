@@ -1,0 +1,8 @@
+﻿  Main.cpp
+  Manager.cpp
+  Screen.cpp
+  TextBuffer.cpp
+C:\Users\sudmi\Desktop\lab\TextEditor\TextBuffer.cpp(60,13): warning C4018: <: несоответствие типов со знаком и без знака
+  TextEditor.cpp
+  Создание кода...
+  TextEditor.vcxproj -> C:\Users\sudmi\Desktop\lab\TextEditor\Debug\TextEditor.exe
