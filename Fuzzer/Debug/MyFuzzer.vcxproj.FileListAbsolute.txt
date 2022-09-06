@@ -1,0 +1,2 @@
+C:\Users\sudmi\Desktop\test\MyFuzzer\Debug\MyFuzzer.exe
+D:\Study\current sem\МБКС\lab1\test\MyFuzzer\Debug\MyFuzzer.exe
