@@ -1,0 +1,5 @@
+Welcome to the VIM_like Text Editor.
+Author: Dmitry Sudakov
+All rights reserved.
+
+Press 'Enter' to start editing.
