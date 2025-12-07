@@ -1,1 +1,0 @@
-D:\Study\current sem\ООП\lab1\MyStringLib\Debug\MyStringLib.lib
