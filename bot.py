@@ -51,7 +51,7 @@ def start(message):
     )
 
 def send_contact_location_keyboard(chat_id, text="Вы не авторизованы! Предоставьте доступ:"):
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     btn1 = types.KeyboardButton("📱 Предоставить профиль", request_contact=True)
     btn2 = types.KeyboardButton("📱 Предоставить доступ", request_location=True)
     keyboard.add(btn1, btn2)
@@ -82,6 +82,8 @@ def handler(message):
         },
         "avatar_file_id": avatar_file_id,
     }
+    
+    print(data)
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_handler(call):
