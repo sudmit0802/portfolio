@@ -8,7 +8,7 @@ bot = telebot.TeleBot(confs.TOKEN)
 @bot.message_handler(commands=['start'])
 def start(message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-
+    
     btn1 = types.KeyboardButton(
         "📱 Предоставить профиль",
         request_contact=True,
@@ -18,6 +18,8 @@ def start(message):
         "📱 Предоставить доступ",
         request_location=True,
     )
+
+    
 
     keyboard.add(btn1)
     keyboard.add(btn2)
