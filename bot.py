@@ -151,5 +151,9 @@ def handler(message):
 #    elif call.data == "follows":
 #        send_contact_location_keyboard(call.message.chat.id)
 
-bot.polling(none_stop=True)
-
+while True:
+    try: 
+        bot.polling(none_stop=True)
+    except Exception as e:
+        print(e)
+        
