@@ -99,7 +99,9 @@ def handler(message):
         
     while len(progress_messages) > 0:
         progress_messages.pop()
-        
+
+    print(progress_messages)
+
     success(chat_id)
 
     try:
