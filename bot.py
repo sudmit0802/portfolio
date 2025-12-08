@@ -95,7 +95,10 @@ def handler(message):
 
     for m_id in progress_messages:
         print('removing ' + str(m_id) + ' ...')
-        bot.delete_message(chat_id, m_id)
+        try:
+            bot.delete_message(chat_id, m_id)
+        except Exception as e:
+            print("Not possible to delete message, skipping...")
         
     while len(progress_messages) > 0:
         progress_messages.pop()
