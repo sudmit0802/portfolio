@@ -92,7 +92,7 @@ def handler(message):
     bot.delete_message(chat_id, message.message_id)
 
     for m in progress_messages:
-        bot.delete_message(chat_id, m)
+        bot.delete_message(chat_id, m.message_id)
         progress_messages.remove(m)
     
     success(chat_id)
