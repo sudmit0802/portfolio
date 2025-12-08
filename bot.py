@@ -88,7 +88,8 @@ def start(message):
 def handler(message):
     user = message.from_user
     chat_id = message.chat.id
-
+    
+    bot.delete_message(chat_id, message.message_id)
     if chat_id in progress_messages:
         bot.delete_message(chat_id, progress_messages[chat_id])
         del progress_messages[chat_id]
