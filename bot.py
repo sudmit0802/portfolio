@@ -33,7 +33,8 @@ def send_contact_location_keyboard(chat_id, text="Вы не авторизова
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     btn = types.KeyboardButton("💼 Авторизоваться", request_contact=True)
     keyboard.add(btn)
-    bot.send_message(chat_id, text, reply_markup=keyboard)
+    msg = bot.send_message(chat_id, text, reply_markup=keyboard)
+    progress_messages[chat_id] = msg.message_id
 
 @bot.message_handler(commands=["start"])
 def start(message):
@@ -156,4 +157,4 @@ while True:
         bot.polling(none_stop=True)
     except Exception as e:
         print(e)
-        
+
