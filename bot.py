@@ -91,7 +91,9 @@ def handler(message):
 
     bot.delete_message(chat_id, message.message_id)
     print(progress_messages)
+
     for m_id in progress_messages:
+        print('removing ' + str(m_id) + ' ...')
         bot.delete_message(chat_id, m_id)
         progress_messages.remove(m_id)
     
